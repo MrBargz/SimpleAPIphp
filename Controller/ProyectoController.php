@@ -1,25 +1,33 @@
 <?php
-require __DIR__.'/../Model/ProyectoModel.php';
-$proyecto = Proyecto::getInstance();
-$http = $_SERVER['REQUEST_METHOD'];
+namespace controller\proyecto{
+  use  model\proyecto\Proyecto;
+  class ProyectoController{   
 
-switch ($http) {
+    private static $response;
+    private static $proyecto;
+    private static $instance = null;
 
-  case 'GET':
-    if (isset($uriData[2])){
-      $request=array(
-        "mensaje" => "funcion 'by ID' no definida",
-        "URIData" => $uriData
-      );
-    }else{
-      $request = $proyecto->obtenerProyectosDB(); 
+      private function __construct(){
+          self::$proyecto = Proyecto::getInstance();
     }
-    header("HTTP/1.1 200 OK");
-    echo json_encode($request, JSON_PRETTY_PRINT);
-  break;
 
-  default:
-    header("HTTP/1.1 404 Not Found");
-  break;
+    public static function getInstance(){
+      if(self::$instance == null){
+          self::$instance = new self();
+      }
+      return self::$instance;
+    }
+
+    public function get($request){
+      if (isset($request[2])){
+          self::$response=array(
+          "mensaje" => "funcion 'get by ID' no definida",
+          "URIData" => $request
+        );
+      }else{
+          self::$response =   self::$proyecto->obtenerProyectosDB();
+      }
+      return json_encode(self::$response, JSON_PRETTY_PRINT);
+    }
+  }
 }
-?>

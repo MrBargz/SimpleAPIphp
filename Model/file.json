@@ -1,8 +1,14 @@
 {
+    "dbp":{
+       "server":"tiamex.ddns.net",
+       "dbname":"task",
+       "username":"javiroot",
+       "password":"3107root"
+    },
     "dbl":{
-      "server":"",
-      "dbname":"",
-      "username":"",
-      "password":""
+      "server":"localhost",
+      "dbname":"task",
+      "username":"root",
+      "password":"root"
    }
  }
