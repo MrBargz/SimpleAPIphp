@@ -1,14 +1,14 @@
 <?php
 namespace controller\proyecto{
+  require __DIR__."/../Model/ProyectoModel.php";
   use  model\proyecto\Proyecto;
-  class ProyectoController{   
+  class ProyectoController{
 
-    private static $response;
-    private static $proyecto;
+    private  $proyecto;
     private static $instance = null;
 
-      private function __construct(){
-          self::$proyecto = Proyecto::getInstance();
+    private function __construct(){
+          $this->proyecto = Proyecto::getInstance();
     }
 
     public static function getInstance(){
@@ -20,14 +20,14 @@ namespace controller\proyecto{
 
     public function get($request){
       if (isset($request[2])){
-          self::$response=array(
+          $response =array(
           "mensaje" => "funcion 'get by ID' no definida",
           "URIData" => $request
         );
       }else{
-          self::$response =   self::$proyecto->obtenerProyectosDB();
+          $response =  $this->proyecto->obtenerProyectosDB();
       }
-      return json_encode(self::$response, JSON_PRETTY_PRINT);
+      return json_encode($response, JSON_PRETTY_PRINT);
     }
   }
 }

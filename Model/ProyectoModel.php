@@ -1,15 +1,14 @@
 <?php
 namespace model\proyecto{
+    require __DIR__."/Database.php";
     use PDO;
     use model\database\Database;
     class Proyecto{
-        private static $data;
-        private static $pdo;
-        private static $request;
+        private $pdo;
         private static $instance = null;
 
         private function __construct(){
-            self::$pdo=Database::getInstance();
+            $this->pdo=Database::getInstance();
         }
 
         public static function getInstance(){
@@ -19,11 +18,10 @@ namespace model\proyecto{
             return self::$instance;
         }
 
-        function obtenerProyectosDB(){
-            self::$data = self::$pdo->prepare('call get_proyectos()');
-            self::$data->execute();
-            self::$request = self::$data->fetchAll(PDO::FETCH_ASSOC);
-            return  self::$request;
+        function get(){
+            $data = $this->pdo->prepare('call get_proyectos()');
+            $data->execute();
+            return $data->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 }
